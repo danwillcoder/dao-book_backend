@@ -1,27 +1,35 @@
-// formula name, composition, dosage & administration, lifestyle advice
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const prescriptionSchema = new Schema({
+    patientId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Patient',
+        required: true
+    },
+    pracId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Practitioner',
+        required: true
+    },
     formulaName: {
         type: String,
         required: true
     },
     composition: {
         type: String,
-        require: true
+        required: true
     },
     dosageAdministration: {
         type: String,
-        require: true
+        required: true
     },
     lifestyleAdvice: {
         type: String,
-        require: true
+        required: true
     }
 });
 
-let Prescription = mongoose.model('Prescription', prescriptionSchema);
+const Prescription = mongoose.model('Prescription', prescriptionSchema);
 
 module.exports = Prescription;
