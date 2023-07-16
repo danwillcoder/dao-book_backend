@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const pracRoutes = require('./routes/pracRoutes');
 const app = express();
@@ -13,7 +14,7 @@ const database = module.exports = () => {
         useUnifiedTopology: true,
     }
     try {
-        mongoose.connect('mongodb+srv://danielkellydev:M0eiruRl2BKQziid@dao-book.bw6ian7.mongodb.net/?retryWrites=true&w=majority', connectionParams);
+        mongoose.connect(process.env.DB_CONNECTION_STRING, connectionParams);
         console.log('Connected to database.');
     }
     catch (err) {
@@ -24,7 +25,8 @@ const database = module.exports = () => {
 
 database()
 
-app.listen(5000, () => {
-    console.log(`Server listening on port 5000`);
+const port = process.env.PORT || 5000;
+app.listen(port, () => {
+    console.log(`Server listening on port ${port}...`);
 }
 );
