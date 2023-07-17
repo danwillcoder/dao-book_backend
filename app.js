@@ -2,9 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const pracRoutes = require('./routes/pracRoutes');
 const patientRoutes = require('./routes/patientRoutes');
+const prescriptionRoutes = require('./routes/prescriptionRoutes');
+const sessionRoutes = require('./routes/sessionRoutes');
 const app = express();
 app.use(express.json());
-app.use('/', pracRoutes, patientRoutes);
+app.use('/', pracRoutes, patientRoutes, prescriptionRoutes, sessionRoutes);
 
 const mongoose = require('mongoose');
 

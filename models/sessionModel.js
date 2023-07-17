@@ -4,9 +4,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
+    pracId: {
+        type: String,
+        required: true
+    },
+    patientId: {
+        type: String,
+        required: true
+    },
     sessionDate: {
         type: Date,
-        required: true
+        required: true,
+        default: Date.now
     },
     mainComplaint: {
         type: String,
