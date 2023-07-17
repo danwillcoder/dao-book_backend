@@ -1,9 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const pracRoutes = require('./routes/pracRoutes');
+const patientRoutes = require('./routes/patientRoutes');
 const app = express();
 app.use(express.json());
-app.use('/', pracRoutes);
+app.use('/', pracRoutes, patientRoutes);
 
 const mongoose = require('mongoose');
 

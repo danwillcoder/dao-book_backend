@@ -16,7 +16,7 @@ const patientSchema = new Schema({
         type: Date,
         require: true
     },
-    emailAddress: {
+    email: {
         type: String,
         require: true
     },

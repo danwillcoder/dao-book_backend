@@ -4,23 +4,23 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const pracSchema = new Schema({
-    FirstName: {
+    firstName: {
         type: String,
         required: true
     },
-    LastName: {
+    lastName: {
         type: String,
         require: true
     },
-    Email: {
+    email: {
         type: String,
         require: true
     },
-    Password: {
+    password: {
         type: String,
         require: true
     },
-    AhpraNumber: {
+    ahpraNumber: {
         type: String,
         require: true
     }

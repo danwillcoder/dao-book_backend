@@ -1,17 +1,17 @@
 const Prac = require('../models/pracModel');
 
 exports.createPrac = (req, res, next) => {
-    const FirstName = req.body.FirstName;
-    const LastName = req.body.LastName;
-    const Email = req.body.Email;
-    const Password = req.body.Password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const password = req.body.password;
     const ahpraNumber = req.body.ahpraNumber;
 
     const prac = new Prac({
-        FirstName: FirstName,
-        LastName: LastName,
-        Email: Email,
-        Password: Password,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
         ahpraNumber: ahpraNumber
     });
     prac
@@ -64,10 +64,10 @@ exports.getPrac = (req, res, next) => {
 
 exports.updatePrac = (req, res, next) => {
     const pracId = req.params.pracId;
-    const FirstName = req.body.FirstName;
-    const LastName = req.body.LastName;
-    const Email = req.body.Email;
-    const Password = req.body.Password;
+    const firstName = req.body.firstName;
+    const lastName = req.body.lastName;
+    const email = req.body.email;
+    const password = req.body.password;
     const ahpraNumber = req.body.ahpraNumber;
 
     Prac.findById(pracId)
@@ -77,10 +77,10 @@ exports.updatePrac = (req, res, next) => {
                 error.statusCode = 404;
                 throw error;
             }
-            prac.FirstName = FirstName;
-            prac.LastName = LastName;
-            prac.Email = Email;
-            prac.Password = Password;
+            prac.firstName = firstName;
+            prac.lastName = lastName;
+            prac.email = email;
+            prac.password = password;
             prac.ahpraNumber = ahpraNumber;
             return prac.save();
         })
