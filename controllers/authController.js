@@ -1,12 +1,13 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Prac = require('../models/pracModel');
+const Patient = require('../models/patientModel');
 
 // Your secret key for JWT token signing. Make sure to keep this secret.
 const secretKey = process.env.JWT_SECRET;
 
 // Function to issue a JWT token for the authenticated practitioner.
-const issueToken = (practitioner) => {
+const issuePracToken = (practitioner) => {
   const payload = {
     ahpraNumber: practitioner.ahpraNumber,
   };
@@ -19,7 +20,7 @@ const issueToken = (practitioner) => {
 };
 
 // Login endpoint to authenticate the practitioner and issue a JWT token.
-exports.login = async (req, res) => {
+exports.pracLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -38,7 +39,7 @@ exports.login = async (req, res) => {
     }
 
     // Issue a JWT token and send it in the response.
-    const token = issueToken(practitioner);
+    const token = issuePracToken(practitioner);
 
     res.json({ token });
   } catch (error) {
@@ -47,3 +48,51 @@ exports.login = async (req, res) => {
   }
 };
 
+// Function to issue a JWT token for authenticated patients.
+const issuePatientToken = (patient) => {
+    const payload = {
+      patientId: patient._id,
+    };
+  
+    const options = {
+      expiresIn: '1h',
+    };
+  
+    return jwt.sign(payload, secretKey, options);
+  };
+
+// Login endpoint to authenticate the patient and issue a JWT token.
+
+exports.patientLogin = async (req, res) => {
+    const { email, dateOfBirth, lastName } = req.body;
+  
+    try {
+      // Convert the input dateOfBirth string to a date string in 'YYYY-MM-DD' format.
+      const formattedDateOfBirth = new Date(dateOfBirth).toISOString().split('T')[0];
+  
+      // Use MongoDB $expr and $regex operators to perform a partial match on the dateOfBirth field.
+      const patient = await Patient.findOne({
+        email,
+        $expr: {
+          $regexMatch: {
+            input: { $dateToString: { format: '%Y-%m-%d', date: '$dateOfBirth' } },
+            regex: formattedDateOfBirth,
+            options: 'i', // 'i' for case-insensitive matching
+          },
+        },
+        lastName,
+      });
+  
+      if (!patient) {
+        return res.status(401).json({ message: 'Invalid credentials' });
+      }
+  
+      // If the patient is found, create a JWT token and send it in the response.
+      const token = issuePatientToken(patient);
+  
+      res.json({ token });
+    } catch (error) {
+      console.error('Login Error:', error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  };
