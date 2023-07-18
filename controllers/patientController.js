@@ -38,7 +38,7 @@ exports.createPatient = (req, res, next) => {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         dateOfBirth: req.body.dateOfBirth,
-        emailAddress: req.body.emailAddress,
+        email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         medications: req.body.medications,
         healthHistory: req.body.healthHistory
@@ -68,7 +68,7 @@ exports.updatePatient = (req, res, next) => {
             patient.firstName = req.body.firstName;
             patient.lastName = req.body.lastName;
             patient.dateOfBirth = req.body.dateOfBirth;
-            patient.emailAddress = req.body.emailAddress;
+            patient.email = req.body.email;
             patient.phoneNumber = req.body.phoneNumber;
             patient.medications = req.body.medications;
             patient.healthHistory = req.body.healthHistory;
