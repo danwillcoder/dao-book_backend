@@ -1,34 +1,44 @@
 const Prac = require('../models/pracModel');
+const bcrypt = require('bcryptjs');
 
-exports.createPrac = (req, res, next) => {
+exports.createPrac = async (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const email = req.body.email;
     const password = req.body.password;
     const ahpraNumber = req.body.ahpraNumber;
-
-    const prac = new Prac({
-        firstName: firstName,
-        lastName: lastName,
-        email: email,
-        password: password,
-        ahpraNumber: ahpraNumber
-    });
-    prac
-        .save()
-        .then(result => {
-            console.log(result);
-            res.status(201).json({
-                message: 'Prac created successfully!',
-                prac: result
-            });
-        }
-        )
-        .catch(err => {
-            console.log(err);
-        }
-        );
-};
+  
+    try {
+      // Check if a practitioner with the same email already exists.
+      const existingPrac = await Prac.findOne({ email });
+  
+      if (existingPrac) {
+        return res.status(400).json({ message: 'Email already registered' });
+      }
+  
+      // Hash the password before saving it to the database.
+      const hashedPassword = await bcrypt.hash(password, 10); // 10 is the number of salt rounds.
+  
+      const prac = new Prac({
+        firstName,
+        lastName,
+        email,
+        password: hashedPassword, // Save the hashed password.
+        ahpraNumber,
+      });
+  
+      const result = await prac.save();
+  
+      console.log(result);
+      res.status(201).json({
+        message: 'Prac created successfully!',
+        prac: result,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: 'Server Error' });
+    }
+  };
 
 exports.getPracs = (req, res, next) => {
     Prac.find()
