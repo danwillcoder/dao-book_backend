@@ -3,7 +3,6 @@ const jwt = require('jsonwebtoken');
 const Prac = require('../models/pracModel');
 const Patient = require('../models/patientModel');
 
-// Your secret key for JWT token signing. Make sure to keep this secret.
 const secretKey = process.env.JWT_SECRET;
 
 // Function to issue a JWT token for the authenticated practitioner.
