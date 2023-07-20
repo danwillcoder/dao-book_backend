@@ -7,9 +7,9 @@ const prescriptionSchema = new Schema({
         ref: 'Patient',
         required: true
     },
-    pracId: {
+    practitionerId: {
         type: Schema.Types.ObjectId,
-        ref: 'Practitioner',
+        ref: 'Prac',
         required: true
     },
     formulaName: {

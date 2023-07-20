@@ -31,6 +31,16 @@ const patientSchema = new Schema({
     healthHistory: {
         type: String,
         require: true
+    },
+    // practitioner ID is automatically added to the patient object when the patient is created.
+    practitionerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Prac',
+        required: true
+    },
+    practitionerName: {
+        type: String,
+        required: true
     }
 });
 

@@ -41,7 +41,9 @@ exports.createPatient = (req, res, next) => {
         email: req.body.email,
         phoneNumber: req.body.phoneNumber,
         medications: req.body.medications,
-        healthHistory: req.body.healthHistory
+        healthHistory: req.body.healthHistory,
+        practitionerId: req.practitioner._id, 
+        practitionerName: req.practitioner.firstName + ' ' + req.practitioner.lastName
     });
 
     patient.save()
@@ -72,6 +74,8 @@ exports.updatePatient = (req, res, next) => {
             patient.phoneNumber = req.body.phoneNumber;
             patient.medications = req.body.medications;
             patient.healthHistory = req.body.healthHistory;
+            patient.practitionerId = req.practitioner._id;
+            patient.practitionerName = req.practitioner.firstName + ' ' + req.practitioner.lastName;
             return patient.save();
         })
         .then(result => {

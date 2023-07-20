@@ -95,6 +95,11 @@ exports.createPrescription = (req, res, next) => {
 
 exports.updatePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
+    const formulaName = req.body.formulaName;
+    const composition = req.body.composition;
+    const dosageAdministration = req.body.dosageAdministration;
+    const lifestyleAdvice = req.body.lifestyleAdvice;
+    
     Prescription.findById(prescriptionId)
         .then(prescription => {
             if (!prescription) {
@@ -102,12 +107,10 @@ exports.updatePrescription = (req, res, next) => {
                     message: 'Prescription not found.'
                 });
             }
-            prescription.pracId = req.body.pracId;
-            prescription.patientId = req.body.patientId;
-            prescription.formulaName = req.body.formulaName;
-            prescription.composition = req.body.composition;
-            prescription.dosageAdministration = req.body.dosageAdministration;
-            prescription.lifestyleAdvice = req.body.lifestyleAdvice;
+            prescription.formulaName = formulaName;
+            prescription.composition = composition;
+            prescription.dosageAdministration = dosageAdministration;
+            prescription.lifestyleAdvice = lifestyleAdvice;
             return prescription.save();
         })
         .then(result => {

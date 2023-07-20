@@ -79,31 +79,57 @@ exports.updatePrac = (req, res, next) => {
     const email = req.body.email;
     const password = req.body.password;
     const ahpraNumber = req.body.ahpraNumber;
-
+  
     Prac.findById(pracId)
-        .then(prac => {
-            if (!prac) {
-                const error = new Error('Could not find prac.');
-                error.statusCode = 404;
-                throw error;
-            }
-            prac.firstName = firstName;
-            prac.lastName = lastName;
-            prac.email = email;
-            prac.password = password;
-            prac.ahpraNumber = ahpraNumber;
-            return prac.save();
-        })
-        .then(result => {
-            res.status(200).json({
+      .then(prac => {
+        if (!prac) {
+          const error = new Error('Could not find prac.');
+          error.statusCode = 404;
+          throw error;
+        }
+  
+        prac.firstName = firstName;
+        prac.lastName = lastName;
+        prac.email = email;
+        prac.ahpraNumber = ahpraNumber;
+  
+        // Check if a new password is provided and hash it before saving.
+        if (password) {
+          bcrypt.hash(password, 10)
+            .then(hashedPassword => {
+              prac.password = hashedPassword;
+              return prac.save();
+            })
+            .then(result => {
+              res.status(200).json({
                 message: 'Prac updated.',
                 prac: result
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({ message: 'Server Error' });
             });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-}
+        } else {
+          // If no new password is provided, save the updated practitioner without changing the password.
+          return prac.save()
+            .then(result => {
+              res.status(200).json({
+                message: 'Prac updated.',
+                prac: result
+              });
+            })
+            .catch(err => {
+              console.log(err);
+              res.status(500).json({ message: 'Server Error' });
+            });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ message: 'Server Error' });
+      });
+  };
 
 exports.deletePrac = (req, res, next) => {
     const pracId = req.params.pracId;
