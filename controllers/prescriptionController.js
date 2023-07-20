@@ -73,7 +73,7 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
 exports.createPrescription = (req, res, next) => {
     
         const prescription = new Prescription({
-            pracId: req.body.pracId,
+            practitionerId: req.practitioner._id,
             patientId: req.body.patientId,
             formulaName: req.body.formulaName,
             composition: req.body.composition,

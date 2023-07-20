@@ -39,6 +39,8 @@ const mustBePrac = asyncHandler(async (req, res, next) => {
     }
 });
 
+
+
 const mustBeOriginalCreator = asyncHandler(async (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -51,10 +53,6 @@ const mustBeOriginalCreator = asyncHandler(async (req, res, next) => {
         throw new Error('Not authorised as the original creator');
     }
 });
-
-
-
-
 
 
 module.exports = mustBePrac, mustBeOriginalCreator

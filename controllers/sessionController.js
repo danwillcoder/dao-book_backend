@@ -73,7 +73,7 @@ exports.getSessionsByPatientId = (req, res, next) => {
 exports.createSession = (req, res, next) => {
     
         const session = new Session({
-            pracId: req.body.pracId,
+            practitionerId: req.practitioner._id,
             patientId: req.body.patientId,
             sessionDate: req.body.sessionDate,
             mainComplaint: req.body.mainComplaint,
@@ -103,7 +103,6 @@ exports.updateSession = (req, res, next) => {
                     message: 'Session not found.'
                 });
             }
-            session.pracId = req.body.pracId;
             session.patientId = req.body.patientId;
             session.mainComplaint = req.body.mainComplaint;
             session.sessionNotes = req.body.sessionNotes;
