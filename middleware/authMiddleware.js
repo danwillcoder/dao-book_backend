@@ -28,6 +28,7 @@ Update session by Session ID (specific PRAC ID)
 
 // Practitioner must be logged in before creating a new object.
 const mustBePrac = asyncHandler(async (req, res, next) => {
+    console.log('mustBePrac middleware running');
     const token = req.headers.authorization.split(' ')[1];
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const practitioner = await Prac.findById(decoded._id);
@@ -43,7 +44,7 @@ const mustBePrac = asyncHandler(async (req, res, next) => {
 
 // Logged in practitioner's ID must match the practitioner ID of the object being updated.
 const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
-    
+
     console.log('verifyPractitionerOwnership middleware running');
     const loggedPractitionerId = req.practitioner._id; // Assuming the logged-in practitioner's _id is available in req.practitioner._id
 
@@ -61,4 +62,4 @@ const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
     }
 });
 
-module.exports = mustBePrac, verifyPractitionerOwnership;
+module.exports = { mustBePrac, verifyPractitionerOwnership }
