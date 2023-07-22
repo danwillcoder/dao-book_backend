@@ -4,8 +4,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const sessionSchema = new Schema({
-    pracId: {
-        type: String,
+    practitionerId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Prac',
         required: true
     },
     patientId: {

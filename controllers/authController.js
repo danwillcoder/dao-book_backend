@@ -9,6 +9,7 @@ const secretKey = process.env.JWT_SECRET;
 const issuePracToken = (practitioner) => {
   const payload = {
     ahpraNumber: practitioner.ahpraNumber,
+    _id: practitioner._id,
   };
 
   const options = {
