@@ -4,9 +4,12 @@ const pracRoutes = require('./routes/pracRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const prescriptionRoutes = require('./routes/prescriptionRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
+const errorHandler = require('./middleware/errorMiddleware');
 const app = express();
 app.use(express.json());
 app.use('/', pracRoutes, patientRoutes, prescriptionRoutes, sessionRoutes);
+
+app.use(errorHandler);
 
 const mongoose = require('mongoose');
 

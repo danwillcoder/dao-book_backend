@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler')
 const Prac = require('../models/pracModel.js');
 const Prescription = require('../models/prescriptionModel.js');
+const Session = require('../models/sessionModel.js');
+const Patient = require('../models/patientModel.js');
 
 /* 
 ENDPOINTS THAT REQUIRE AUTH
@@ -39,20 +41,24 @@ const mustBePrac = asyncHandler(async (req, res, next) => {
     }
 });
 
+// Logged in practitioner's ID must match the practitioner ID of the object being updated.
+const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
+    
+    console.log('verifyPractitionerOwnership middleware running');
+    const loggedPractitionerId = req.practitioner._id; // Assuming the logged-in practitioner's _id is available in req.practitioner._id
+
+    // Assuming the object's 'practitionerId' field is available in req.params or req.body
+    const objectPractitionerId = req.params.practitionerId || req.body.practitionerId;
 
 
-const mustBeOriginalCreator = asyncHandler(async (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const prescription = await Prescription.findById(req.params.prescriptionId);
-    if (prescription.practitionerId.equals(decoded._id)) {
+    if (loggedPractitionerId.toString() === objectPractitionerId.toString()) {
+        // The logged-in practitioner is the owner of the object
         next();
-    }
-    else {
-        res.status(401);
-        throw new Error('Not authorised as the original creator');
+    } else {
+        res.status(401).json({
+            message: 'Not authorized.'
+        });
     }
 });
 
-
-module.exports = mustBePrac, mustBeOriginalCreator
+module.exports = mustBePrac, verifyPractitionerOwnership;

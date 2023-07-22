@@ -1,4 +1,5 @@
 const Prescription = require('../models/prescriptionModel');
+const verifyPrescriptionOwnership = require('../middleware/authMiddleware');
 
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
@@ -93,7 +94,7 @@ exports.createPrescription = (req, res, next) => {
             });
     }
 
-exports.updatePrescription = (req, res, next) => {
+exports.updatePrescription =  (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     const formulaName = req.body.formulaName;
     const composition = req.body.composition;
