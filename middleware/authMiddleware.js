@@ -43,6 +43,7 @@ const mustBePrac = asyncHandler(async (req, res, next) => {
 
 // Logged in practitioner's ID must match the practitioner ID of the object being updated.
 const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
+    
     console.log('verifyPractitionerOwnership middleware running');
     const loggedPractitionerId = req.practitioner._id; // Assuming the logged-in practitioner's _id is available in req.practitioner._id
 
