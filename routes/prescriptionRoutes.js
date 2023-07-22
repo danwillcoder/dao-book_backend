@@ -1,8 +1,7 @@
 const express = require('express');
 const prescriptionController = require('../controllers/prescriptionController');
-const mustBePrac = require('../middleware/authMiddleware');
+const { mustBePrac, verifyPractitionerOwnership } = require('../middleware/authMiddleware');
 const router = express.Router();
-const verifyPractitionerOwnership = require('../middleware/authMiddleware');
 router.get('/prescriptions', prescriptionController.getPrescriptions);
 router.get('/prescription/:prescriptionId', prescriptionController.getPrescription);
 router.get('/prescriptions/prac/:pracId', prescriptionController.getPrescriptionsByPracId);

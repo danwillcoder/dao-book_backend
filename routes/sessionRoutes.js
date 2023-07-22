@@ -1,7 +1,6 @@
 const express = require('express');
 const sessionController = require('../controllers/sessionController');
-const mustBePrac = require('../middleware/authMiddleware');
-const verifyPractitionerOwnership = require('../middleware/authMiddleware');
+const { mustBePrac, verifyPractitionerOwnership } = require('../middleware/authMiddleware');
 const router = express.Router();
 router.get('/sessions', sessionController.getSessions);
 router.post('/session', mustBePrac, sessionController.createSession);
