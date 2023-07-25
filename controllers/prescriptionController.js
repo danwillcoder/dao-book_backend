@@ -54,7 +54,7 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
 
 exports.getPrescriptionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
-    Prescription.find({ patientId: patientId })
+    Prescription.find({patientId})
         .then(prescriptions => {
             if (!prescriptions) {
                 return res.status(404).json({

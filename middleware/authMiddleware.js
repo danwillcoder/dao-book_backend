@@ -7,28 +7,32 @@ const Patient = require('../models/patientModel.js');
 
 /* 
 ENDPOINTS THAT REQUIRE AUTH
-
-
-Get single patient by Patient ID (specific PRAC ID)
-
-
-
-
-Get all prescriptions by Patient ID (specific PRAC ID OR PATIENT ID)
-
-Get all sessions by Patient ID (specific PRAC ID)
-Get session by Session ID (specific PRAC ID)
-Create new session (general PRAC ID)
-Update session by Session ID (specific PRAC ID)
+(In parentheses are the ID types that are required to access the endpoint.)
 
 DONE
 --------------------
+
+**PRACTITIONERS**
+Get practitioner by ID (specific PRAC ID)
+Update practitioner by ID (specific PRAC ID)
+
+**PRESCRIPTIONS**
+Create new prescription (general PRAC ID)
 Update prescription by Prescription ID (specific PRAC ID)
 Get prescription by Prescription ID (specific PRAC ID OR PATIENT ID)
+Get all prescriptions by Patient ID (specific PRAC ID OR PATIENT ID)
 
+**PATIENTS**
 Get all patients by PRAC ID (specific PRAC ID)
 Create new patient (general PRAC ID)
 Update patient (specific PRAC ID)
+Get single patient by Patient ID (specific PRAC ID)
+
+**SESSIONS**
+Create new session (general PRAC ID)
+Update session by Session ID (specific PRAC ID)
+Get all sessions by Patient ID (general PRAC ID)
+Get session by Session ID (general PRAC ID)
 
 */
 
@@ -50,6 +54,8 @@ const mustBePrac = asyncHandler(async (req, res, next) => {
     }
 });
 
+
+// Practitioner or patient must be logged in before retrieving an object.
 const mustBePracOrPatient = asyncHandler(async (req, res, next) => {
     console.log('mustBePracOrPatient middleware running');
     const token = req.headers.authorization.split(' ')[1];
@@ -74,9 +80,39 @@ const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
     console.log('verifyPractitionerOwnership middleware running');
     const loggedPractitionerId = req.practitioner._id; // Assuming the logged-in practitioner's _id is available in req.practitioner._id
 
-    // Assuming the object's 'practitionerId' field is available in req.params or req.body
-    const objectPractitionerId = req.params.practitionerId || req.body.practitionerId;
+    // Assuming the object's 'practitionerId' field is available in req.params or req.body, has to also work with Get requests
+    const objectPractitionerId = req.body.practitionerId || req.params.practitionerId
 
+    console.log ('loggedPractitionerId', loggedPractitionerId);
+    console.log ('objectPractitionerId', objectPractitionerId);
+
+    if (loggedPractitionerId.toString() === objectPractitionerId.toString()) {
+        // The logged-in practitioner is the owner of the object
+        next();
+    } else {
+        res.status(401).json({
+            message: 'Not authorized.'
+        });
+    }
+});
+
+// Logged in practitioner must be logged in to access his/her own profile. 
+const verifyProfileOwnership = asyncHandler(async (req, res, next) => {
+    console.log('verifyProfileOwnership middleware running');
+    const loggedPractitionerId = req.practitioner._id; // Assuming the logged-in practitioner's _id is available in req.practitioner._id
+
+    let objectPractitionerId;
+
+    // For GET requests, use req.params to access practitionerId
+    if (req.method === 'GET' || req.method === 'PUT') {
+        objectPractitionerId = req.params.pracId;
+    } else if (req.method === 'POST') {
+        // For POST requests, use req.body to access practitionerId
+        objectPractitionerId = req.body.practitionerId;
+    }
+
+    console.log('loggedPractitionerId', loggedPractitionerId);
+    console.log('objectPractitionerId', objectPractitionerId);
 
     if (loggedPractitionerId.toString() === objectPractitionerId.toString()) {
         // The logged-in practitioner is the owner of the object
@@ -89,18 +125,50 @@ const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
 });
 
 
+// Logged in practitioner's ID must match the practitioner ID of the patient being retrieved.
+const verifyPatientsPrac = asyncHandler(async (req, res, next) => {
+    console.log('verifyPractitionerOwnership middleware running');
+
+    const loggedPractitionerId = req.practitioner._id;
+    const patientId = req.params.patientId;
+
+    try {
+        const patient = await Patient.findById(patientId);
+
+        if (!patient) {
+            return res.status(404).json({
+                message: 'Patient not found.'
+            });
+        }
+
+        if (patient.practitionerId.toString() !== loggedPractitionerId.toString()) {
+            return res.status(401).json({
+                message: 'Not authorized.'
+            });
+        }
+
+        // Ownership verified, proceed to the next middleware/route handler
+        next();
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({
+            message: 'Server Error'
+        });
+    }
+});
+
+
 // Middleware to follow on top of mustBePracOrPatient to check if the logged in user's _id matches the patientId or practitionerId of the object being retrieved.
 
 const verifyOwnership = (Model, idFieldName) => asyncHandler(async (req, res, next) => {
     console.log('verifyOwnership middleware running');
 
     // Assuming the ID is available in req.params
-    const objectId = req.params[idFieldName];
+    const objectId = req.params[idFieldName]
 
     try {
         // Find the object by ID in the database using the provided model
-        const object = await Model.findById(objectId);
-
+        const object = await Model.findById(objectId) || await Model.findOne({ _id: objectId }) || await Model.findOne({ [idFieldName]: objectId });
         if (!object) {
             return res.status(404).json({
                 message: 'Object not found.'
@@ -140,4 +208,9 @@ const verifyOwnership = (Model, idFieldName) => asyncHandler(async (req, res, ne
 });
 
 
-module.exports = { mustBePrac, verifyPractitionerOwnership, mustBePracOrPatient, verifyOwnership }
+module.exports = { mustBePrac, verifyPractitionerOwnership, mustBePracOrPatient, verifyOwnership, verifyPatientsPrac, verifyProfileOwnership}
+
+
+
+
+
