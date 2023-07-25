@@ -13,6 +13,20 @@ exports.getPatients = (req, res, next) => {
         });
 }
 
+exports.getPatientsByPracId = (req, res, next) => {
+    const practitionerId = req.params.practitionerId;
+    Patient.find({ practitionerId: practitionerId })
+        .then(patients => {
+            res.status(200).json({
+                message: 'Fetched patients successfully.',
+                patients: patients
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
 exports.getPatient = (req, res, next) => {
     const patientId = req.params.patientId;
     Patient.findById(patientId)
