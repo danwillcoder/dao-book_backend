@@ -81,6 +81,7 @@ exports.updatePatient = (req, res, next) => {
                     message: 'Patient not found.'
                 });
             }
+            
             patient.firstName = req.body.firstName;
             patient.lastName = req.body.lastName;
             patient.dateOfBirth = req.body.dateOfBirth;
@@ -88,8 +89,10 @@ exports.updatePatient = (req, res, next) => {
             patient.phoneNumber = req.body.phoneNumber;
             patient.medications = req.body.medications;
             patient.healthHistory = req.body.healthHistory;
-            patient.practitionerId = req.practitioner._id;
-            patient.practitionerName = req.practitioner.firstName + ' ' + req.practitioner.lastName;
+
+            // Since this is an update operation, we don't update practitionerId and practitionerName.
+            // The patient's practitioner should remain the same.
+
             return patient.save();
         })
         .then(result => {
@@ -100,6 +103,9 @@ exports.updatePatient = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            res.status(500).json({
+                message: 'An error occurred while updating the patient.'
+            });
         });
 }
 
