@@ -89,6 +89,8 @@ exports.updatePatient = (req, res, next) => {
             patient.phoneNumber = req.body.phoneNumber;
             patient.medications = req.body.medications;
             patient.healthHistory = req.body.healthHistory;
+            patient.practitionerId = req.practitioner._id;
+            patient.practitionerName = req.practitioner.firstName + ' ' + req.practitioner.lastName;
 
             // Since this is an update operation, we don't update practitionerId and practitionerName.
             // The patient's practitioner should remain the same.

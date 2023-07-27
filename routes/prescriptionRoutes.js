@@ -1,10 +1,11 @@
 const express = require('express');
 const prescriptionController = require('../controllers/prescriptionController');
-const { mustBePrac, verifyPractitionerOwnership, mustBePracOrPatient, verifyOwnership, verifyPrescriptionOwnership } = require('../middleware/authMiddleware');
+const { mustBePrac, verifyPractitionerOwnership, mustBePracOrPatient, verifyOwnership} = require('../middleware/authMiddleware');
+const { sendEmailToPatient } = require('../middleware/emailMiddleware');
 const router = express.Router();
 const Prescription = require('../models/prescriptionModel');
 
-router.post('/prescription', mustBePrac, prescriptionController.createPrescription);
+router.post('/prescription', mustBePrac, sendEmailToPatient, prescriptionController.createPrescription);
 router.get('/prescriptions', prescriptionController.getPrescriptions);
 router.get('/prescription/:prescriptionId', mustBePracOrPatient, verifyOwnership(Prescription, 'prescriptionId'), prescriptionController.getPrescription);
 router.get('/prescriptions/prac/:pracId', prescriptionController.getPrescriptionsByPracId);
