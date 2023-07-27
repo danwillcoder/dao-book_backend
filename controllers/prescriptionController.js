@@ -79,7 +79,8 @@ exports.createPrescription = (req, res, next) => {
             formulaName: req.body.formulaName,
             composition: req.body.composition,
             dosageAdministration: req.body.dosageAdministration,
-            lifestyleAdvice: req.body.lifestyleAdvice
+            lifestyleAdvice: req.body.lifestyleAdvice,
+            createdDate: Date.now()
         });
     
         prescription.save()

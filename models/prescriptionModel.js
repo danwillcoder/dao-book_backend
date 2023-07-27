@@ -27,6 +27,10 @@ const prescriptionSchema = new Schema({
     lifestyleAdvice: {
         type: String,
         required: true
+    },
+    createdDate: {
+        type: Date,
+        required: true
     }
 });
 
