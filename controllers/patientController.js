@@ -47,8 +47,7 @@ exports.getPatient = (req, res, next) => {
 }
 
 exports.createPatient = (req, res, next) => {
-
-    const patient = new Patient({
+    const newPatientObject = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         dateOfBirth: req.body.dateOfBirth,
@@ -58,10 +57,27 @@ exports.createPatient = (req, res, next) => {
         healthHistory: req.body.healthHistory,
         practitionerId: req.practitioner._id, 
         practitionerName: req.practitioner.firstName + ' ' + req.practitioner.lastName
-    });
+    }
 
-    patient.save()
-        .then(result => {
+    const uniquePatientFields = {
+        firstName: newPatientObject.firstName,
+        lastName: newPatientObject.lastName,
+        dateOfBirth: newPatientObject.dateOfBirth,
+        email: newPatientObject.email
+    }
+
+    Patient.find(uniquePatientFields).then(databasePatient => {
+        if (databasePatient) {
+                const error = new Error('Patient already exists');
+                error.statusCode = 403;
+                throw error;
+        }
+
+    const patient = new Patient(newPatientObject);
+    return patient;
+    })
+    .then(patient => patient.save())
+    .then(result => {
             res.status(201).json({
                 message: 'Created patient successfully.',
                 patient: result
@@ -69,6 +85,7 @@ exports.createPatient = (req, res, next) => {
         })
         .catch(err => {
             console.log(err);
+            next(err)
         });
 }
 
