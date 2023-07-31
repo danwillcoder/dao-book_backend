@@ -66,15 +66,16 @@ exports.createPatient = (req, res, next) => {
         email: newPatientObject.email
     }
 
-    Patient.find(uniquePatientFields).then(databasePatient => {
+    Patient.findOne(uniquePatientFields).then(databasePatient => {
         if (databasePatient) {
                 const error = new Error('Patient already exists');
                 error.statusCode = 403;
                 throw error;
+        } else {
+                const patient = new Patient(newPatientObject);
+                return patient;
         }
 
-    const patient = new Patient(newPatientObject);
-    return patient;
     })
     .then(patient => patient.save())
     .then(result => {
