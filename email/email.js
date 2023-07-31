@@ -11,8 +11,7 @@ const sendEmail = async (options) => {
     });
 
     const mailOptions = {
-        from: `DaoBook <
-        ${process.env.EMAIL_FROM}>`,
+        from: options.from,
         to: options.email,
         subject: options.subject,
         text: options.message
