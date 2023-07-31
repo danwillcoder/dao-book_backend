@@ -31,6 +31,14 @@ const prescriptionSchema = new Schema({
     createdDate: {
         type: Date,
         required: true
+    },
+    practitionerName: {
+        type: String,
+        required: true
+      },
+    sendEmail: {
+        type: Boolean,
+        default: false
     }
 });
 
