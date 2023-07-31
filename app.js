@@ -1,5 +1,6 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const pracRoutes = require('./routes/pracRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const prescriptionRoutes = require('./routes/prescriptionRoutes');
@@ -7,6 +8,18 @@ const sessionRoutes = require('./routes/sessionRoutes');
 const errorHandler = require('./middleware/errorMiddleware');
 const app = express();
 app.use(express.json());
+
+const allowedOrigins = ["http://localhost:5173"]
+
+app.use(cors(
+  { origin: (origin, callback) => {
+    if(allowedOrigins.includes(origin) || !origin) {
+      callback(null, true)
+    } else {
+      callback(new Error("Not allowed by CORS"))
+    }
+  }}
+));
 
 // Define separate router instances for each route
 const pracRouter = express.Router();
