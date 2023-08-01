@@ -7,7 +7,8 @@ const Prescription = require('../models/prescriptionModel');
 
 router.post('/prescription', mustBePrac, sendEmailToPatient, prescriptionController.createPrescription);
 router.get('/prescriptions', prescriptionController.getPrescriptions);
-router.get('/prescription/:prescriptionId', mustBePracOrPatient, verifyOwnership(Prescription, 'prescriptionId'), prescriptionController.getPrescription);
+// router.get('/prescription/:prescriptionId', mustBePracOrPatient, verifyOwnership(Prescription, 'prescriptionId'), prescriptionController.getPrescription);
+router.get('/prescription/session/:sessionId', mustBePracOrPatient, verifyOwnership(Prescription, 'prescriptionId'), prescriptionController.getPrescriptionsBySessionId);
 router.get('/prescriptions/prac/:pracId', prescriptionController.getPrescriptionsByPracId);
 router.get('/prescriptions/patient/:patientId', mustBePracOrPatient, verifyOwnership(Prescription, 'patientId'), prescriptionController.getPrescriptionsByPatientId);
 router.put('/prescription/:prescriptionId', mustBePrac, verifyPractitionerOwnership, prescriptionController.updatePrescription);
