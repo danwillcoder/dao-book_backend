@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Patient = require('../models/patientModel'); // Assuming you have a Patient model
 const Practitioner = require('../models/pracModel'); // Assuming you have a Practitioner model
 
-const sendEmailToPatient = asyncHandler(async (req, res) => {
+const sendEmailToPatient = asyncHandler(async (req, res, next) => {
   console.log('sendEmailToPatient running');
 
   const patientId = req.body.patientId;
@@ -48,19 +48,18 @@ const sendEmailToPatient = asyncHandler(async (req, res) => {
         message: `Hi ${firstName},\n\nHere is your prescription information from today's session. If you have any further questions, please don't hesitate to reach out. \n\nFormula Name: ${formulaName}\nComposition: ${composition}\nDosage & Administration: ${dosageAdministration}\nLifestyle Advice: ${lifestyleAdvice}\n\nKind regards,\n${pracName}\n${pracEmail}`,
       });
 
-      res.status(200).json({
-        message: 'Email sent.',
-      });
+      res.status(200);
+      res.emailMessage = 'Email sent.';
     } else {
       console.log('sendEmailBoolean is false');
-      res.status(200).json({
-        message: 'Email not sent.',
-      });
+      res.status(200);
+      res.emailMessage = 'Email not sent.';
+      }
 
+      next()
       // Add a return statement here to prevent further code execution
       return;
-    }
-  } catch (error) {
+    } catch (error) {
     console.log('error', error);
     res.status(500).json({
       message: 'Error sending email.',
