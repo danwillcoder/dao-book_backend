@@ -2,6 +2,11 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const prescriptionSchema = new Schema({
+    sessionId: {
+        type: Schema.Types.ObjectId,
+        ref: 'Session',
+        required: true
+    },
     patientId: {
         type: Schema.Types.ObjectId,
         ref: 'Patient',
@@ -35,7 +40,7 @@ const prescriptionSchema = new Schema({
     practitionerName: {
         type: String,
         required: true
-      },
+    },
     sendEmail: {
         type: Boolean,
         default: false

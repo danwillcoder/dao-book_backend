@@ -1,5 +1,4 @@
 const Prescription = require('../models/prescriptionModel');
-const verifyPrescriptionOwnership = require('../middleware/authMiddleware');
 
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
@@ -54,7 +53,7 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
 
 exports.getPrescriptionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
-    Prescription.find({patientId})
+    Prescription.find({ patientId })
         .then(prescriptions => {
             if (!prescriptions) {
                 return res.status(404).json({
@@ -71,38 +70,57 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
         });
 }
 
-exports.createPrescription = (req, res, next) => {
-    
-        const prescription = new Prescription({
-            practitionerId: req.practitioner._id,
-            practitionerName: req.practitioner.firstName + ' ' + req.practitioner.lastName,
-            patientId: req.body.patientId,
-            formulaName: req.body.formulaName,
-            composition: req.body.composition,
-            dosageAdministration: req.body.dosageAdministration,
-            lifestyleAdvice: req.body.lifestyleAdvice,
-            createdDate: Date.now()
-        });
-    
-        prescription.save()
-            .then(result => {
-                res.status(201).json({
-                    message: 'Created prescription successfully.',
-                    prescription: result
+exports.getPrescriptionsBySessionId = (req, res, next) => {
+    const sessionId = req.params.sessionId;
+    Prescription.find({ sessionId })
+        .then(prescriptions => {
+            if (!prescriptions) {
+                return res.status(404).json({
+                    message: 'Prescriptions not found for this session.'
                 });
-            })
-            .catch(err => {
-                console.log(err);
+            }
+            res.status(200).json({
+                message: 'Fetched prescriptions successfully for this session.',
+                prescriptions: prescriptions
             });
-    }
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
 
-exports.updatePrescription =  (req, res, next) => {
+exports.createPrescription = (req, res, next) => {
+    const prescription = new Prescription({
+        sessionId: req.body.sessionId,
+        practitionerId: req.practitioner._id,
+        practitionerName: req.practitioner.firstName + ' ' + req.practitioner.lastName,
+        patientId: req.body.patientId,
+        formulaName: req.body.formulaName,
+        composition: req.body.composition,
+        dosageAdministration: req.body.dosageAdministration,
+        lifestyleAdvice: req.body.lifestyleAdvice,
+        createdDate: Date.now()
+    });
+
+    prescription.save()
+        .then(result => {
+            res.status(201).json({
+                message: 'Created prescription successfully.',
+                prescription: result
+            });
+        })
+        .catch(err => {
+            console.log(err);
+        });
+}
+
+exports.updatePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     const formulaName = req.body.formulaName;
     const composition = req.body.composition;
     const dosageAdministration = req.body.dosageAdministration;
     const lifestyleAdvice = req.body.lifestyleAdvice;
-    
+
     Prescription.findById(prescriptionId)
         .then(prescription => {
             if (!prescription) {
