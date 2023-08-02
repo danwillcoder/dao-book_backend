@@ -1,6 +1,7 @@
 const Patient = require('../models/patientModel');
 
-//get all patients
+
+// Get all patients.
 exports.getPatients = (req, res, next) => {
     Patient.find()
         .then(patients => {
@@ -14,7 +15,8 @@ exports.getPatients = (req, res, next) => {
         });
 }
 
-//get patients by relevant practitioner id
+
+// Get all patients belonging to a practitioner.
 exports.getPatientsByPracId = (req, res, next) => {
     const practitionerId = req.params.practitionerId;
     Patient.find({ practitionerId: practitionerId })
@@ -29,7 +31,8 @@ exports.getPatientsByPracId = (req, res, next) => {
         });
 }
 
-//get patient by patient id
+
+// Get a single patient by ID.
 exports.getPatient = (req, res, next) => {
     const patientId = req.params.patientId;
     Patient.findById(patientId)
@@ -49,7 +52,8 @@ exports.getPatient = (req, res, next) => {
         });
 }
 
-//create patient
+
+// Create a new patient.
 exports.createPatient = (req, res, next) => {
     const newPatientObject = {
         firstName: req.body.firstName,
@@ -94,7 +98,8 @@ exports.createPatient = (req, res, next) => {
         });
 }
 
-//update patient by id
+
+// Update a patient by ID.
 exports.updatePatient = (req, res, next) => {
     const patientId = req.params.patientId;
     Patient.findById(patientId)
@@ -134,7 +139,8 @@ exports.updatePatient = (req, res, next) => {
         });
 }
 
-//delete patient by id
+
+// Delete a patient by ID.
 exports.deletePatient = (req, res, next) => {
     const patientId = req.params.patientId;
     Patient.findByIdAndDelete(patientId)

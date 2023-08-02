@@ -4,7 +4,7 @@ const Patient = require('../models/patientModel');
 const Practitioner = require('../models/pracModel'); 
 
 
-// Middleware to send email to patient
+// Send an email to the patient.
 const sendEmailToPatient = asyncHandler(async (req, res, next) => {
   console.log('sendEmailToPatient running');
 

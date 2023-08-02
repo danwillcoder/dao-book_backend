@@ -1,6 +1,7 @@
 const Prescription = require('../models/prescriptionModel');
 
-//get all prescriptions
+
+// Get all prescriptions.
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
         .then(prescriptions => {
@@ -14,7 +15,8 @@ exports.getPrescriptions = (req, res, next) => {
         });
 }
 
-//get prescription by id
+
+// Get a single prescription by ID.
 exports.getPrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)
@@ -34,7 +36,8 @@ exports.getPrescription = (req, res, next) => {
         });
 }
 
-//get prescriptions by practitioner id
+
+// Get all prescriptions belonging to a practitioner.
 exports.getPrescriptionsByPracId = (req, res, next) => {
     const pracId = req.params.pracId;
     Prescription.find({ pracId: pracId })
@@ -54,7 +57,8 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
         });
 }
 
-//get prescriptions by patient id
+
+// Get all prescriptions belonging to a patient.
 exports.getPrescriptionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
     Prescription.find({ patientId })
@@ -74,7 +78,8 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
         });
 }
 
-//get prescriptions by session id
+
+// Get all prescriptions belonging to a session.
 exports.getPrescriptionsBySessionId = (req, res, next) => {
     const sessionId = req.params.sessionId;
     Prescription.find({ sessionId })
@@ -94,7 +99,8 @@ exports.getPrescriptionsBySessionId = (req, res, next) => {
         });
 }
 
-//create new prescription
+
+// Create a new prescription.
 exports.createPrescription = (req, res, next) => {
     const prescription = new Prescription({
         sessionId: req.body.sessionId,
@@ -120,7 +126,8 @@ exports.createPrescription = (req, res, next) => {
         });
 }
 
-//update prescription by id
+
+// Update a prescription by ID.
 exports.updatePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     const formulaName = req.body.formulaName;
@@ -153,7 +160,7 @@ exports.updatePrescription = (req, res, next) => {
 }
 
 
-//delete prescription by id
+// Delete a prescription by ID.
 exports.deletePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)

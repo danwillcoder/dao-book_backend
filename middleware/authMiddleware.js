@@ -1,8 +1,6 @@
 const jwt = require('jsonwebtoken');
 const asyncHandler = require('express-async-handler')
 const Prac = require('../models/pracModel.js');
-const Prescription = require('../models/prescriptionModel.js');
-const Session = require('../models/sessionModel.js');
 const Patient = require('../models/patientModel.js');
 
 /* 
@@ -202,7 +200,8 @@ const verifyOwnership = (Model, idFieldName) => asyncHandler(async (req, res, ne
         }
     } catch (error) {
         res.status(401).json({
-            message: 'Invalid token or authentication error'
+            message: 'Invalid token or authentication error',
+            error: JSON.stringify(error)
         });
     }
 });
