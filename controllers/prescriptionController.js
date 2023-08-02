@@ -1,5 +1,6 @@
 const Prescription = require('../models/prescriptionModel');
 
+// Get all prescriptions.
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
         .then(prescriptions => {
@@ -13,6 +14,7 @@ exports.getPrescriptions = (req, res, next) => {
         });
 }
 
+// Get a single prescription by ID.
 exports.getPrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)
@@ -32,6 +34,7 @@ exports.getPrescription = (req, res, next) => {
         });
 }
 
+// Get all prescriptions belonging to a practitioner.
 exports.getPrescriptionsByPracId = (req, res, next) => {
     const pracId = req.params.pracId;
     Prescription.find({ pracId: pracId })
@@ -51,6 +54,7 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
         });
 }
 
+// Get all prescriptions belonging to a patient.
 exports.getPrescriptionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
     Prescription.find({ patientId })
@@ -70,6 +74,7 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
         });
 }
 
+// Get all prescriptions belonging to a session.
 exports.getPrescriptionsBySessionId = (req, res, next) => {
     const sessionId = req.params.sessionId;
     Prescription.find({ sessionId })
@@ -89,6 +94,7 @@ exports.getPrescriptionsBySessionId = (req, res, next) => {
         });
 }
 
+// Create a new prescription.
 exports.createPrescription = (req, res, next) => {
     const prescription = new Prescription({
         sessionId: req.body.sessionId,
@@ -114,6 +120,7 @@ exports.createPrescription = (req, res, next) => {
         });
 }
 
+// Update a prescription by ID.
 exports.updatePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     const formulaName = req.body.formulaName;
@@ -145,6 +152,7 @@ exports.updatePrescription = (req, res, next) => {
         });
 }
 
+// Delete a prescription by ID.
 exports.deletePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)

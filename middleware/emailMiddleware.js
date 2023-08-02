@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler');
 const Patient = require('../models/patientModel'); // Assuming you have a Patient model
 const Practitioner = require('../models/pracModel'); // Assuming you have a Practitioner model
 
+// Send an email to the patient.
 const sendEmailToPatient = asyncHandler(async (req, res, next) => {
   console.log('sendEmailToPatient running');
 
