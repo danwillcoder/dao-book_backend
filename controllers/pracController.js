@@ -1,6 +1,7 @@
 const Prac = require('../models/pracModel');
 const bcrypt = require('bcryptjs');
 
+//create practitioner
 exports.createPrac = async (req, res, next) => {
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
@@ -40,6 +41,8 @@ exports.createPrac = async (req, res, next) => {
     }
   };
 
+
+//get all practitioners
 exports.getPracs = (req, res, next) => {
     Prac.find()
         .then(pracs => {
@@ -53,6 +56,7 @@ exports.getPracs = (req, res, next) => {
         });
 }
 
+//get practitioner by practitioner's id
 exports.getPrac = (req, res, next) => {
     const pracId = req.params.pracId;
     Prac.findById(pracId)
@@ -72,6 +76,7 @@ exports.getPrac = (req, res, next) => {
         });
 }
 
+//update practitioner by practitioner's id
 exports.updatePrac = (req, res, next) => {
     const pracId = req.params.pracId;
     const firstName = req.body.firstName;
@@ -131,6 +136,7 @@ exports.updatePrac = (req, res, next) => {
       });
   };
 
+//delete practitioner by practitioner's id
 exports.deletePrac = (req, res, next) => {
     const pracId = req.params.pracId;
     Prac.findByIdAndDelete(pracId)

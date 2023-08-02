@@ -9,6 +9,7 @@ const errorHandler = require('./middleware/errorMiddleware');
 const app = express();
 app.use(express.json());
 
+// CORS
 const allowedOrigins = ["http://localhost:5173"]
 
 app.use(cors(
