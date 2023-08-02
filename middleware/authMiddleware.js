@@ -202,7 +202,8 @@ const verifyOwnership = (Model, idFieldName) => asyncHandler(async (req, res, ne
         }
     } catch (error) {
         res.status(401).json({
-            message: 'Invalid token or authentication error'
+            message: 'Invalid token or authentication error',
+            error: error
         });
     }
 });
