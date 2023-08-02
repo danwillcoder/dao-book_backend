@@ -1,5 +1,6 @@
 const Prescription = require('../models/prescriptionModel');
 
+
 // Get all prescriptions.
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
@@ -13,6 +14,7 @@ exports.getPrescriptions = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Get a single prescription by ID.
 exports.getPrescription = (req, res, next) => {
@@ -34,6 +36,7 @@ exports.getPrescription = (req, res, next) => {
         });
 }
 
+
 // Get all prescriptions belonging to a practitioner.
 exports.getPrescriptionsByPracId = (req, res, next) => {
     const pracId = req.params.pracId;
@@ -53,6 +56,7 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Get all prescriptions belonging to a patient.
 exports.getPrescriptionsByPatientId = (req, res, next) => {
@@ -74,6 +78,7 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
         });
 }
 
+
 // Get all prescriptions belonging to a session.
 exports.getPrescriptionsBySessionId = (req, res, next) => {
     const sessionId = req.params.sessionId;
@@ -93,6 +98,7 @@ exports.getPrescriptionsBySessionId = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Create a new prescription.
 exports.createPrescription = (req, res, next) => {
@@ -119,6 +125,7 @@ exports.createPrescription = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Update a prescription by ID.
 exports.updatePrescription = (req, res, next) => {
@@ -151,6 +158,7 @@ exports.updatePrescription = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Delete a prescription by ID.
 exports.deletePrescription = (req, res, next) => {

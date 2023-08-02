@@ -1,5 +1,6 @@
 const Patient = require('../models/patientModel');
 
+
 // Get all patients.
 exports.getPatients = (req, res, next) => {
     Patient.find()
@@ -13,6 +14,7 @@ exports.getPatients = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Get all patients belonging to a practitioner.
 exports.getPatientsByPracId = (req, res, next) => {
@@ -28,6 +30,7 @@ exports.getPatientsByPracId = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Get a single patient by ID.
 exports.getPatient = (req, res, next) => {
@@ -49,6 +52,7 @@ exports.getPatient = (req, res, next) => {
         });
 }
 
+
 // Create a new patient.
 exports.createPatient = (req, res, next) => {
     const newPatientObject = {
@@ -69,7 +73,7 @@ exports.createPatient = (req, res, next) => {
         dateOfBirth: newPatientObject.dateOfBirth,
         email: newPatientObject.email
     }
-
+    // Check if patient already exists. If so, throw error.
     Patient.findOne(uniquePatientFields).then(databasePatient => {
         if (databasePatient) {
                 const error = new Error('Patient already exists');
@@ -93,6 +97,7 @@ exports.createPatient = (req, res, next) => {
             next(err)
         });
 }
+
 
 // Update a patient by ID.
 exports.updatePatient = (req, res, next) => {
@@ -133,6 +138,7 @@ exports.updatePatient = (req, res, next) => {
             });
         });
 }
+
 
 // Delete a patient by ID.
 exports.deletePatient = (req, res, next) => {

@@ -1,5 +1,3 @@
-// session date, main complaint, session notes, tongue, pulse
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

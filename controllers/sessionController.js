@@ -1,6 +1,7 @@
 const Session = require('../models/sessionModel');
 
 
+
 // Get all sessions.
 exports.getSessions = (req, res, next) => {
     Session.find()
@@ -14,6 +15,7 @@ exports.getSessions = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Get a single session by ID.
 exports.getSession = (req, res, next) => {
@@ -35,6 +37,7 @@ exports.getSession = (req, res, next) => {
         });
 }
 
+
 // Get all sessions belonging to a practitioner.
 exports.getSessionsByPracId = (req, res, next) => {
     const pracId = req.params.pracId;
@@ -55,6 +58,7 @@ exports.getSessionsByPracId = (req, res, next) => {
         });
 }
 
+
 // Get all sessions belonging to a patient.
 exports.getSessionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
@@ -74,6 +78,7 @@ exports.getSessionsByPatientId = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Create a new session.
 exports.createSession = (req, res, next) => {
@@ -99,6 +104,7 @@ exports.createSession = (req, res, next) => {
                 console.log(err);
             });
     }
+
 
 // Update a session by ID.
 exports.updateSession = (req, res, next) => {
@@ -127,6 +133,7 @@ exports.updateSession = (req, res, next) => {
             console.log(err);
         });
 }
+
 
 // Delete a session by ID.
 exports.deleteSession = (req, res, next) => {
