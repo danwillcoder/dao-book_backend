@@ -1,5 +1,6 @@
 const Prescription = require('../models/prescriptionModel');
 
+//get all prescriptions
 exports.getPrescriptions = (req, res, next) => {
     Prescription.find()
         .then(prescriptions => {
@@ -13,6 +14,7 @@ exports.getPrescriptions = (req, res, next) => {
         });
 }
 
+//get prescription by id
 exports.getPrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)
@@ -32,6 +34,7 @@ exports.getPrescription = (req, res, next) => {
         });
 }
 
+//get prescriptions by practitioner id
 exports.getPrescriptionsByPracId = (req, res, next) => {
     const pracId = req.params.pracId;
     Prescription.find({ pracId: pracId })
@@ -51,6 +54,7 @@ exports.getPrescriptionsByPracId = (req, res, next) => {
         });
 }
 
+//get prescriptions by patient id
 exports.getPrescriptionsByPatientId = (req, res, next) => {
     const patientId = req.params.patientId;
     Prescription.find({ patientId })
@@ -70,6 +74,7 @@ exports.getPrescriptionsByPatientId = (req, res, next) => {
         });
 }
 
+//get prescriptions by session id
 exports.getPrescriptionsBySessionId = (req, res, next) => {
     const sessionId = req.params.sessionId;
     Prescription.find({ sessionId })
@@ -89,6 +94,7 @@ exports.getPrescriptionsBySessionId = (req, res, next) => {
         });
 }
 
+//create new prescription
 exports.createPrescription = (req, res, next) => {
     const prescription = new Prescription({
         sessionId: req.body.sessionId,
@@ -114,6 +120,7 @@ exports.createPrescription = (req, res, next) => {
         });
 }
 
+//update prescription by id
 exports.updatePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     const formulaName = req.body.formulaName;
@@ -145,6 +152,8 @@ exports.updatePrescription = (req, res, next) => {
         });
 }
 
+
+//delete prescription by id
 exports.deletePrescription = (req, res, next) => {
     const prescriptionId = req.params.prescriptionId;
     Prescription.findById(prescriptionId)

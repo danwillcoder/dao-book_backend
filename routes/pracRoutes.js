@@ -2,8 +2,6 @@ const express = require('express');
 const pracController = require('../controllers/pracController');
 const authController = require('../controllers/authController');
 const { mustBePrac, verifyProfileOwnership } = require('../middleware/authMiddleware');
-
-
 const router = express.Router();
 
 router.get('/pracs', pracController.getPracs);
