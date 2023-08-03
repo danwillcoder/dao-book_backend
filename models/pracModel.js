@@ -1,5 +1,3 @@
- // first name, last name, email address, ahpra number, password
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

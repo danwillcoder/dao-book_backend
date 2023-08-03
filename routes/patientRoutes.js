@@ -3,6 +3,7 @@ const patientController = require('../controllers/patientController');
 const authController = require('../controllers/authController');
 const router = express.Router();
 const { mustBePrac, verifyPractitionerOwnership, verifyPatientsPrac } = require('../middleware/authMiddleware');
+
 router.get('/patients', patientController.getPatients);
 router.get('/patient/:patientId', mustBePrac, verifyPatientsPrac, patientController.getPatient);
 router.get('/patients/prac/:practitionerId', mustBePrac, verifyPractitionerOwnership, patientController.getPatientsByPracId);

@@ -1,5 +1,3 @@
-//first name, last name, date of birth, email address, phone number, medications, health history
-
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

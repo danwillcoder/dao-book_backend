@@ -11,9 +11,11 @@ const sessionRoutes = require('./routes/sessionRoutes');
 const app = express();
 app.use(express.json());
 
-console.log("Setting up CORS middleware...");
 
+//CORS
 const allowedOrigins = ["http://localhost:5173", "http://www.daobook.com.au", "https://www.daobook.com.au", "http://daobook.com.au", "https://daobook.com.au"]
+
+
 
 app.use(cors(
   { origin: (origin, callback) => {
