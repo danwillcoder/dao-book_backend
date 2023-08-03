@@ -7,7 +7,7 @@ const Patient = require('../models/patientModel');
 const secretKey = process.env.JWT_SECRET;
 
 // Function to issue a JWT token for the authenticated practitioner.
-exports.issuePracToken = (practitioner) => {
+const issuePracToken = (practitioner) => {
   const payload = {
     ahpraNumber: practitioner.ahpraNumber,
     _id: practitioner._id,
@@ -50,7 +50,7 @@ exports.pracLogin = async (req, res) => {
 };
 
 // Function to issue a JWT token for authenticated patients.
-exports.issuePatientToken = (patient) => {
+const issuePatientToken = (patient) => {
     const payload = {
       _id: patient._id,
     };
