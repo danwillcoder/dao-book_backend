@@ -1,13 +1,16 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const errorHandler = require('./middleware/errorMiddleware');
 const pracRoutes = require('./routes/pracRoutes');
 const patientRoutes = require('./routes/patientRoutes');
 const prescriptionRoutes = require('./routes/prescriptionRoutes');
 const sessionRoutes = require('./routes/sessionRoutes');
-const errorHandler = require('./middleware/errorMiddleware');
+
+
 const app = express();
 app.use(express.json());
+
 
 //CORS
 const allowedOrigins = ["http://localhost:5173", "http://www.daobook.com.au", "https://www.daobook.com.au", "http://daobook.com.au", "https://daobook.com.au"]
@@ -45,26 +48,4 @@ sessionRouter.use('/', sessionRoutes);
 // Error handler middleware
 app.use(errorHandler);
 
-const mongoose = require('mongoose');
-
-// Database
-const database = module.exports = () => {
-  const connectionParams = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-  try {
-    mongoose.connect(process.env.DB_CONNECTION_STRING, connectionParams);
-    console.log('Connected to the database.');
-  } catch (err) {
-    console.log(`Could not connect to the database. Exiting now...${err}`);
-    process.exit();
-  }
-}
-
-database()
-
-const port = process.env.PORT || 5000;
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}...`);
-});
+module.exports = app;

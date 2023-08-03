@@ -2,11 +2,11 @@
   "name": "dao-book_backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "utils/server.js",
   "scripts": {
     "test": "jest --watchAll",
-    "start": "nodemon app.js",
-    "dev": "node app.js"
+    "start": "nodemon utils/server.js",
+    "dev": "node utils/server.js"
   },
   "author": "",
   "license": "ISC",
