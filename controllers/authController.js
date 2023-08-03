@@ -50,7 +50,7 @@ exports.pracLogin = async (req, res) => {
 };
 
 // Function to issue a JWT token for authenticated patients.
-exports.issuePatientToken = (patient) => {
+const issuePatientToken = (patient) => {
     const payload = {
       _id: patient._id,
     };
@@ -61,6 +61,8 @@ exports.issuePatientToken = (patient) => {
   
     return jwt.sign(payload, secretKey, options);
   };
+
+exports.issuePatientToken = issuePatientToken;
 
 // Login endpoint to authenticate the patient and issue a JWT token.
 
