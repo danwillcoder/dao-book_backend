@@ -62,6 +62,8 @@ const issuePatientToken = (patient) => {
     return jwt.sign(payload, secretKey, options);
   };
 
+exports.issuePatientToken = issuePatientToken;
+
 // Login endpoint to authenticate the patient and issue a JWT token.
 
 exports.patientLogin = async (req, res) => {
