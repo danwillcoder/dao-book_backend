@@ -21,7 +21,7 @@ const issuePracToken = (practitioner) => {
 };
 
 // Login endpoint to authenticate the practitioner and issue a JWT token.
-exports.pracLogin = async (req, res) => {
+const pracLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -66,7 +66,7 @@ exports.issuePatientToken = issuePatientToken;
 
 // Login endpoint to authenticate the patient and issue a JWT token.
 
-exports.patientLogin = async (req, res) => {
+const patientLogin = async (req, res) => {
     const { email, dateOfBirth, lastName } = req.body;
   
     try {
@@ -99,3 +99,6 @@ exports.patientLogin = async (req, res) => {
       res.status(500).json({ message: 'Server Error' });
     }
   };
+
+
+  module.exports = {  issuePatientToken, issuePracToken, pracLogin, patientLogin };
