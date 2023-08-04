@@ -89,7 +89,7 @@ const verifyPractitionerOwnership = asyncHandler(async (req, res, next) => {
         next();
     } else {
         res.status(401).json({
-            message: 'Not authorized.'
+            message: 'Not authorised.'
         });
     }
 });
@@ -117,7 +117,7 @@ const verifyProfileOwnership = asyncHandler(async (req, res, next) => {
         next();
     } else {
         res.status(401).json({
-            message: 'Not authorized.'
+            message: 'Not authorised.'
         });
     }
 });
@@ -141,7 +141,7 @@ const verifyPatientsPrac = asyncHandler(async (req, res, next) => {
 
         if (patient.practitionerId.toString() !== loggedPractitionerId.toString()) {
             return res.status(401).json({
-                message: 'Not authorized.'
+                message: 'Not authorised.'
             });
         }
 
@@ -195,7 +195,7 @@ const verifyOwnership = (Model, idFieldName) => asyncHandler(async (req, res, ne
             next();
         } else {
             res.status(401).json({
-                message: 'Not authorized.'
+                message: 'Not authorised.'
             });
         }
     } catch (error) {
