@@ -115,6 +115,7 @@ exports.updateSession = (req, res, next) => {
                 });
             }
             session.patientId = req.body.patientId;
+            session.sessionDate = req.body.sessionDate;
             session.mainComplaint = req.body.mainComplaint;
             session.sessionNotes = req.body.sessionNotes;
             session.tongue = req.body.tongue;
