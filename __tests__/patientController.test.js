@@ -42,11 +42,9 @@ describe('Test patient routes', () => {
 
         await mongoose.connect(mongoServer.getUri())
 
-        await mongoose.connection.db.collection('patient').insertOne(patientPayload)
-        await mongoose.connection.db.collection('practitioner').insertOne(practitionerPayload)
+        await mongoose.connection.db.collection('patients').insertOne(patientPayload)
+        await mongoose.connection.db.collection('pracs').insertOne(practitionerPayload)
 
-        console.log('patientPayload', patientPayload);
-        console.log('practitionerPayload', practitionerPayload);
     })
 
     afterAll(async () => {
