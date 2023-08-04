@@ -308,7 +308,7 @@ describe('Test patient routes', () => {
 describe('POST /patient/login', () => {
     describe('given a valid request', () => {
         it('should return a 200 status code', async () => {
-            // create a new patient to login, please think of some
+            // create a new patient to login
             const patient3 = new Patient({ 
                 firstName: 'Sam',
                 lastName: 'Smith',
