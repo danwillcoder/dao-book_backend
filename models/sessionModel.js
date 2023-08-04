@@ -14,7 +14,7 @@ const sessionSchema = new Schema({
     sessionDate: {
         type: Date,
         required: true,
-        default: Date.now
+        default: Date.now 
     },
     mainComplaint: {
         type: String,

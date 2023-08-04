@@ -1,7 +1,5 @@
 const Session = require('../models/sessionModel');
 
-
-
 // Get all sessions.
 exports.getSessions = (req, res, next) => {
     Session.find()

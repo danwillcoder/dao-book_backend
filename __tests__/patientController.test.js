@@ -2,9 +2,10 @@ const supertest = require('supertest');
 const app = require('../app');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const mongoose = require('mongoose');
-const { issuePracToken } = require('../controllers/authController');
 const Prac = require('../models/pracModel');
 const Patient = require('../models/patientModel');
+const { issuePracToken } = require('../controllers/authController');
+
 
 const patientId = new mongoose.Types.ObjectId();
 const practitionerId = new mongoose.Types.ObjectId();
@@ -42,6 +43,10 @@ describe('Test patient routes', () => {
         await mongoose.connect(mongoServer.getUri())
 
         await mongoose.connection.db.collection('patient').insertOne(patientPayload)
+        await mongoose.connection.db.collection('practitioner').insertOne(practitionerPayload)
+
+        console.log('patientPayload', patientPayload);
+        console.log('practitionerPayload', practitionerPayload);
     })
 
     afterAll(async () => {
@@ -69,6 +74,57 @@ describe('Test patient routes', () => {
                 expect(response.statusCode).toBe(404);
         });
         })
+
+
+// testing the POST /patient route
+    describe('POST /patient', () => {
+        describe('given a valid request', () => {
+            it('should return a 201 status code', async () => {
+                const token = issuePracToken(practitionerPayload);
+                console.log('token', token);
+                // Make the POST request and set the JWT token in the Authorization header
+                const response = await supertest(app)
+                  .post('/patient')
+                  .send({
+                    firstName: 'John',
+                    lastName: 'Smith',
+                    dob: '01/01/2000',
+                    email: 'johnsmith@gmail.com',
+                    phoneNumber: '0412345678',
+                    medications: 'Panadol',
+                    healthHistory: 'None',
+                    practitionerId: practitionerId,
+                    practitionerName: 'Dr. Devan Smith',
+                  })
+                  .set('Authorization', `Bearer ${token}`); // Set the JWT token in the Authorization header
+          
+                expect(response.statusCode).toBe(201);
+
+                
+                
+                
+    
+            });
+        })
+    })
+
+// testing the GET /patient/:id route
+
+// testing the GET /patients/prac/:practitionerId route
+
+// testing the PUT /patient/:id route
+
+// testing the DELETE /patient/:id route
+
+// testing the POST /patient/login route
+
+
+
+
+
+
+
+
 
     });
 });

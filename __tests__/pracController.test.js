@@ -75,7 +75,13 @@ describe('Test prac routes', () => {
             });
         })
 
-        // testing the GET /prac/:pracId route
+// testing the GET /prac/:pracId route
+
+// testing the PUT /prac/:pracId route
+
+// testing the DELETE /prac/:pracId route
+
+
 
     })
 
