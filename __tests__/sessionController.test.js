@@ -2,7 +2,7 @@ const supertest = require('supertest');
 const app = require('../app');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const { issuePracToken, issuePatientToken } = require('../controllers/authController');
+const { issuePracToken } = require('../controllers/authController');
 
 const practitionerId = new mongoose.Types.ObjectId();
 const patientId = new mongoose.Types.ObjectId();

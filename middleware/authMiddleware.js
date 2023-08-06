@@ -3,39 +3,6 @@ const asyncHandler = require('express-async-handler')
 const Prac = require('../models/pracModel.js');
 const Patient = require('../models/patientModel.js');
 
-/* 
-ENDPOINTS THAT REQUIRE AUTH
-(In parentheses are the ID types that are required to access the endpoint.)
-
-DONE
---------------------
-
-**PRACTITIONERS**
-Get practitioner by ID (specific PRAC ID)
-Update practitioner by ID (specific PRAC ID)
-
-**PRESCRIPTIONS**
-Create new prescription (general PRAC ID)
-Update prescription by Prescription ID (specific PRAC ID)
-Get prescription by Prescription ID (specific PRAC ID OR PATIENT ID)
-Get all prescriptions by Patient ID (specific PRAC ID OR PATIENT ID)
-
-**PATIENTS**
-Get all patients by PRAC ID (specific PRAC ID)
-Create new patient (general PRAC ID)
-Update patient (specific PRAC ID)
-Get single patient by Patient ID (specific PRAC ID)
-
-**SESSIONS**
-Create new session (general PRAC ID)
-Update session by Session ID (specific PRAC ID)
-Get all sessions by Patient ID (general PRAC ID)
-Get session by Session ID (general PRAC ID)
-
-*/
-
-
-
 // Practitioner must be logged in before creating a new object.
 const mustBePrac = asyncHandler(async (req, res, next) => {
     console.log('mustBePrac middleware running');
