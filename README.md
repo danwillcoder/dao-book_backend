@@ -2,7 +2,7 @@
 
 This repo is the back-end functionality for our DaoBook Clinic Management application.
 
-Visit the live site [here](https://dao-book.com.au/).
+Visit the live site [here](https://daobook.com.au/).
 
 ## Tech Stack
 
