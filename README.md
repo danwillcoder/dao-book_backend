@@ -2,6 +2,8 @@
 
 This repo is the back-end functionality for our DaoBook Clinic Management application.
 
+Visit the live site [here](https://dao-book.com.au/).
+
 ## Tech Stack
 
 **Client:** Vite, React, ReactRouter, TailwindCSS ([repo here](https://github.com/danwillcoder/dao-book_frontend))
